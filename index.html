@@ -20,14 +20,12 @@
           <a href="javascript:;">
             <img src="https://s2.music.126.net/style/web2/img/frame/topbar.png?e670cc929859791af55233727ce2cde8" alt="">
           </a>
-          <span>发现音乐</span>
+          <span @click="init" style="cursor:pointer">发现音乐</span>
         </h1>
       </div>
     </header>
     <div class="baner">
       <div class="container">
-
-
 
       </div>
     </div>
@@ -48,7 +46,7 @@
       </div>
     </div>
 
-    <div class="searchList" v-if="curStart==3 && commitList.length==0">
+    <div class="searchList" v-if="curStart==3 && show==0">
       <div class="container">
         <h3>搜索音乐</h3>
         <ul>
@@ -61,7 +59,7 @@
       </div>
     </div>
 
-    <div class="detailMutail" v-if="commitList.length>0">
+    <div class="detailMutail"  v-if="show>0">
       <div class="container">
 
         <div class="leftplay">
@@ -107,12 +105,12 @@
       </div>
     </div>
     <div class="footer">
-      临渊羡鱼，不如退而结网
+      今日事,今日毕
     </div>
   </div>
 </body>
-<script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.1/axios.js"></script>
-<script src="https://cdn.bootcss.com/moment.js/2.24.0/moment.js"></script>
+<script src="./js/axios.js"></script>
+<script src="./js/moment.js"></script>
 <script src="./js/vue.js"></script>
 <script>
   let vm = new Vue({
@@ -122,7 +120,7 @@
       return {
         keyWord: '年少有为',
         musicList: [],
-        curStart: 1, //1 标识正常状态  2 //标识 正在加载中  3 已经暂时页面 
+        curStart: 1, //1 标识正常状态  2 //标识 正在加载中  3 页面 
         commitList: [], //评论列表
         musicSrc: {},
         error: '',
@@ -130,12 +128,7 @@
         play: false,
         num: 0, //保存图片旋转位置
         currentTime: 0,
-
       }
-
-    },
-    mounted() {
-      
 
     },
     computed: {
@@ -147,9 +140,26 @@
         } = this
         return Math.floor(currentTime / duration * 100) + '%'
       },
+      show(){
+        
+        return Object.keys(this.musicSrc).length
+      }
 
     },
     methods: {
+      init(){
+
+        this.keyWord=""
+        this.musicList=[]
+        this.curStart=1
+        this.commitList=[]
+        this.reg= {}
+        this.play= false
+        this.num= 0 //保存图片旋转位置
+        this.currentTime= 0
+
+
+      },
       getSearchList() {
         const {
           keyWord
@@ -175,8 +185,6 @@
           } else {
             this.curStart = 0
             this.error = data.msg
-
-
           }
 
         }, (error) => {
@@ -201,6 +209,8 @@
           }
         }).then((val) => {
 
+          console.log(val);
+          
           let data = val.data
 
           if (data.code !== 200) {
@@ -212,7 +222,7 @@
 
           this.commitList = data.hotComments
          
-          this.img =this.commitList[0].user.avatarUrl
+          // this.img =this.commitList[0].user.avatarUrl
           this.getVideo(id)
         }, (error) => {
 
@@ -277,15 +287,6 @@
         }, 25);
 
       }
-      ,
-      frontSpeed(type) {
-        
-
-
-         
-      },
-
-
     },
 
     filters: {
@@ -294,8 +295,6 @@
         return moment(value).format('YYYY-MM-DD hh:mm:ss')
       }
     }
-
-
   })
 </script>
 

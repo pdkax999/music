@@ -64,7 +64,7 @@
 }
 .baner .container {
   height: 420px;
-  background: no-repeat url("https://p1.music.126.net/LqeJALMTGSzFcXosVoMRhg==/109951166060177875.jpg?imageView&quality=89") center;
+  background: no-repeat url("https://p1.music.126.net/VvsLym_WuzcQ18JXI2pEmg==/109951166072629759.jpg?imageView&quality=89") center;
 }
 .searchWrapper {
   height: 300px;
@@ -184,10 +184,7 @@
   background-size: cover;
   border: 10px solid #000;
   transition: all 0.3s;
-  /*  transition: all 3s;
-              &:hover{
-                transform: rotateZ(360deg);
-              }*/
+  
 }
 .detailMutail .container .commitRig {
   float: right;
